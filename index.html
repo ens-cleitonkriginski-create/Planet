@@ -751,6 +751,117 @@ footer a {
     transition: none !important;
   }
 }
+:root {
+  color-scheme: dark;
+
+  --paper: #0e1324;
+  --ink: #f2f0fa;
+  --muted: #abb3cc;
+  --line: #303a55;
+  --orange: #edc482;
+  --accent: #b5a2ed;
+  --panel: #171e33;
+  --hover: #242d48;
+  --selected: #32304f;
+}
+
+/* Títulos e destaques */
+h1 em,
+.brand-mark {
+  color: var(--accent);
+}
+
+.dot {
+  background: #91d9bd;
+}
+
+::selection {
+  background: #b5a2ed;
+  color: #0e1324;
+}
+
+/* Observatório */
+.space {
+  background: radial-gradient(
+    ellipse at 35% 40%,
+    #1c2844,
+    #080d1b 75%
+  );
+}
+
+.info {
+  background: var(--panel);
+}
+
+.star {
+  background: #e4dffa;
+}
+
+.space-label,
+.coordinates,
+.view-note {
+  color: #acb8d6;
+}
+
+.orbital-line {
+  border-color: #b5a2ed30;
+}
+
+.pause {
+  color: #d4d9ed;
+  background: #171e3380;
+  border-color: #596586;
+}
+
+.pause:hover {
+  background: var(--hover);
+}
+
+.description,
+.fact {
+  color: var(--muted);
+}
+
+/* Seleção de planetas */
+.planet-button {
+  color: #c2c9de;
+}
+
+.planet-button:hover {
+  background: var(--hover);
+}
+
+.planet-button[aria-pressed="true"] {
+  background: var(--selected);
+  color: var(--ink);
+}
+
+/* Desafio */
+.answer,
+.next {
+  border-color: #596586;
+}
+
+.answer:hover:not(:disabled),
+.next:hover {
+  background: var(--hover);
+}
+
+.answer.correct {
+  background: #203c37;
+  border-color: #75c9a9;
+  color: #bcf1dc;
+}
+
+.answer.wrong {
+  background: #462c39;
+  border-color: #e49bad;
+  color: #ffd1dc;
+}
+
+.feedback {
+  color: #c2c9de;
+}
 
 </style>
 </head>
