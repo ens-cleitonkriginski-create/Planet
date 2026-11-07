@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Um pequeno planetário para grandes curiosidades. Explore os oito planetas do Sistema Solar.">
 <title>Órbita — um pequeno planetário</title>
 <style>
-
 :root {
   --paper:#f5f3e9;
   --ink:#242621;
@@ -14,44 +14,35 @@
   --orange:#ce4a2c;
   --accent:#ce4a2c
 }
-
 * {
   box-sizing:border-box
 }
-
 html {
   scroll-behavior:smooth
 }
-
 body {
   margin:0;
   background:var(--paper);
   color:var(--ink);
   font-family:Arial,Helvetica,sans-serif
 }
-
 button,a,input {
   -webkit-tap-highlight-color:transparent
 }
-
 button,a {
   touch-action:manipulation
 }
-
 button {
   font:inherit;
   cursor:pointer
 }
-
 a {
   color:inherit
 }
-
 button:focus-visible,a:focus-visible {
   outline:3px solid var(--orange);
   outline-offset:5px
 }
-
 header {
   max-width:1400px;
   margin:auto;
@@ -61,7 +52,6 @@ header {
   justify-content:space-between;
   border-bottom:1px solid var(--line)
 }
-
 .brand {
   text-decoration:none;
   font-size:29px;
@@ -71,29 +61,24 @@ header {
   gap:10px;
   align-items:center
 }
-
 .brand-mark {
   font-size:38px;
   font-weight:400;
   line-height:1;
   transform:rotate(-25deg)
 }
-
 nav {
   display:flex;
   gap:30px;
   align-items:center;
   font-size:13px
 }
-
 nav a {
   text-decoration:none
 }
-
 nav a:hover {
   color:var(--orange)
 }
-
 .status {
   font:10px monospace;
   text-transform:uppercase;
@@ -102,20 +87,17 @@ nav a:hover {
   align-items:center;
   gap:7px
 }
-
 .dot {
   width:6px;
   height:6px;
   background:#758163;
   border-radius:50%
 }
-
 main {
   max-width:1400px;
   padding:0 5%;
   margin:auto
 }
-
 .intro {
   padding:49px 0 33px;
   display:flex;
@@ -123,14 +105,12 @@ main {
   justify-content:space-between;
   gap:30px
 }
-
 .eyebrow {
   font:10px monospace;
   letter-spacing:1.7px;
   text-transform:uppercase;
   color:var(--muted)
 }
-
 h1 {
   font-size:clamp(42px,5vw,70px);
   font-weight:500;
@@ -138,12 +118,10 @@ h1 {
   letter-spacing:-3px;
   margin:16px 0 0
 }
-
 h1 em {
   font-family:Georgia,serif;
   font-weight:400
 }
-
 .intro p {
   max-width:280px;
   font-size:14px;
@@ -151,14 +129,12 @@ h1 em {
   color:var(--muted);
   margin:0 0 4px
 }
-
 .explorer {
   display:grid;
   grid-template-columns:1.5fr 1fr;
   min-height:425px;
   border:1px solid var(--line)
 }
-
 .space {
   background:#101916;
   min-height:425px;
@@ -168,20 +144,17 @@ h1 em {
   display:grid;
   place-items:center
 }
-
 .stars {
   position:absolute;
   inset:0;
   pointer-events:none
 }
-
 .star {
   position:absolute;
   border-radius:50%;
   background:#e2e8ce;
   opacity:.5
 }
-
 .space-label {
   position:absolute;
   top:25px;
@@ -191,7 +164,6 @@ h1 em {
   font:10px monospace;
   letter-spacing:1.6px
 }
-
 .coordinates {
   position:absolute;
   bottom:24px;
@@ -200,7 +172,6 @@ h1 em {
   z-index:4;
   font:10px monospace
 }
-
 .view-note {
   position:absolute;
   bottom:24px;
@@ -208,7 +179,6 @@ h1 em {
   color:#a0b0a4;
   font:9px monospace
 }
-
 .orbital-line {
   position:absolute;
   width:78%;
@@ -217,13 +187,11 @@ h1 em {
   border-radius:50%;
   transform:rotate(-29deg)
 }
-
 .orbital-line.second {
   width:110%;
   height:52%;
   transform:rotate(-29deg)
 }
-
 .planet {
   width:245px;
   height:245px;
@@ -232,10 +200,9 @@ h1 em {
   z-index:2;
   background:var(--texture);
   box-shadow:inset -65px -15px 70px #000b,inset 6px 4px 15px #ffffff50,0 0 65px #88c5b31a;
-  transition:background .3s;
+  transition:filter .3s;
   animation:float 8s ease-in-out infinite
 }
-
 .planet::after {
   content:"";
   position:absolute;
@@ -244,7 +211,6 @@ h1 em {
   background:radial-gradient(circle at 28% 25%,#ffffff15,transparent 47%,#0008);
   z-index:3
 }
-
 .terrain {
   width:100%;
   height:100%;
@@ -254,12 +220,10 @@ h1 em {
   opacity:.82;
   overflow:hidden
 }
-
 .terrain svg {
   height:100%;
   width:100%
 }
-
 .planet .rings {
   display:none;
   position:absolute;
@@ -275,30 +239,24 @@ h1 em {
   box-shadow:0 0 0 4px #ddcca44d,0 0 0 8px #a999733d;
   z-index:4
 }
-
 .planet.saturn .rings {
   display:block
 }
-
 .planet.saturn {
   width:190px;
   height:190px
 }
-
 .planet.uranus {
   transform:rotate(75deg)
 }
-
 @keyframes float {
   50% {
     translate:0 -8px
   }
 }
-
 .space.paused .planet {
   animation-play-state:paused
 }
-
 .pause {
   position:absolute;
   top:17px;
@@ -310,38 +268,32 @@ h1 em {
   font:10px monospace;
   z-index:5
 }
-
 .info {
   padding:30px 35px;
   display:flex;
   flex-direction:column;
   justify-content:center
 }
-
 .info-top {
   display:flex;
   justify-content:space-between;
   gap:12px
 }
-
 .tag {
   color:var(--orange);
   font:10px monospace;
   letter-spacing:1px
 }
-
 .index {
   font:11px monospace;
   color:var(--muted)
 }
-
 h2 {
   font-weight:500;
   letter-spacing:-2px;
   font-size:49px;
   margin:14px 0 8px
 }
-
 .description {
   color:#6a7065;
   font-size:14px;
@@ -349,7 +301,6 @@ h2 {
   min-height:47px;
   margin:0 0 23px
 }
-
 .stats {
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -357,7 +308,6 @@ h2 {
   border-top:1px solid var(--line);
   padding-top:22px
 }
-
 .stat-label {
   display:block;
   text-transform:uppercase;
@@ -366,12 +316,10 @@ h2 {
   color:var(--muted);
   margin-bottom:9px
 }
-
 .stat-value {
   font-size:19px;
   letter-spacing:-.5px
 }
-
 .fact {
   margin-top:25px;
   padding-left:12px;
@@ -380,14 +328,12 @@ h2 {
   line-height:1.6;
   color:#676b60
 }
-
 .fact strong {
   display:block;
   color:var(--ink);
   font-size:11px;
   margin-bottom:3px
 }
-
 .selector-head {
   display:flex;
   justify-content:space-between;
@@ -397,14 +343,12 @@ h2 {
   text-transform:uppercase;
   letter-spacing:1px
 }
-
 .planets {
   display:grid;
   grid-template-columns:repeat(8,1fr);
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line)
 }
-
 .planet-button {
   background:none;
   border:0;
@@ -417,22 +361,18 @@ h2 {
   gap:12px;
   color:#696e63;
   font-size:11px;
-  transition:background .2s
+  transition:background .2s, color .2s
 }
-
 .planet-button:last-child {
   border-right:0
 }
-
 .planet-button:hover {
   background:#eaeade
 }
-
 .planet-button[aria-pressed=true] {
   background:#e8eadd;
   color:#252c22
 }
-
 .planet-button[aria-pressed=true]::after {
   content:"";
   position:absolute;
@@ -442,7 +382,6 @@ h2 {
   left:0;
   right:0
 }
-
 .mini {
   width:26px;
   height:26px;
@@ -451,7 +390,6 @@ h2 {
   box-shadow:inset -7px -3px 9px #0008;
   position:relative
 }
-
 .mini.ringed:after {
   content:"";
   position:absolute;
@@ -460,40 +398,34 @@ h2 {
   border-radius:50%;
   transform:rotate(-25deg)
 }
-
 .bottom {
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:60px;
   padding:43px 0
 }
-
 .bottom h3 {
   font-size:24px;
   font-weight:500;
   letter-spacing:-.8px;
   margin:12px 0
 }
-
 .bottom p {
   font-size:13px;
   line-height:1.7;
   color:var(--muted);
   max-width:440px
 }
-
 .question {
   margin:11px 0 16px;
   font-size:17px;
   line-height:1.4
 }
-
 .answers {
   display:flex;
   gap:8px;
   flex-wrap:wrap
 }
-
 .answer,.next {
   background:transparent;
   border:1px solid #babfb1;
@@ -501,26 +433,21 @@ h2 {
   font-size:12px;
   color:var(--ink)
 }
-
 .answer:hover:not(:disabled),.next:hover {
   background:#e6e8db
 }
-
 .answer:disabled {
   cursor:default
 }
-
 .answer.correct {
   background:#dce4cb;
   border-color:#829364;
   color:#304423
 }
-
 .answer.wrong {
   background:#f1d9d1;
   border-color:#bd7662
 }
-
 .feedback {
   font-size:12px;
   line-height:1.5;
@@ -528,20 +455,16 @@ h2 {
   color:#5a6552;
   margin-top:12px
 }
-
 .next {
   margin-top:8px
 }
-
 .next[hidden] {
   display:none
 }
-
 .quiz {
   border-left:1px solid var(--line);
   padding-left:40px
 }
-
 .quiet-link {
   font:11px monospace;
   color:var(--orange);
@@ -551,7 +474,6 @@ h2 {
   border:0;
   border-bottom:1px solid var(--orange)
 }
-
 footer {
   border-top:1px solid var(--line);
   padding:22px 0 28px;
@@ -562,17 +484,14 @@ footer {
   font:10px monospace;
   gap:20px
 }
-
 .footer-logo {
   font-size:14px;
   color:var(--ink);
   font-weight:bold
 }
-
 footer a {
   text-underline-offset:4px
 }
-
 @media(min-width:1450px) {
   .space {
     min-height:480px
@@ -582,7 +501,6 @@ footer a {
     height:285px
   }
 }
-
 @media(max-width:850px) {
   .status {
     display:none
@@ -613,7 +531,6 @@ footer a {
     display:none
   }
 }
-
 @media(max-width:600px) {
   header {
     padding:20px 6%
@@ -692,7 +609,6 @@ footer a {
     width:100%
   }
 }
-
 @media(prefers-reduced-motion:reduce) {
   html {
     scroll-behavior:auto
@@ -704,7 +620,6 @@ footer a {
     transition:none!important
   }
 }
-
 :root {
   color-scheme: dark;
   --paper: #0e1324;
@@ -717,53 +632,42 @@ footer a {
   --hover: #242d48;
   --selected: #32304f;
 }
-
 h1 em,
 .brand-mark {
   color: var(--accent);
 }
-
 .dot {
   background: #91d9bd;
 }
-
 ::selection {
   background: #b5a2ed;
   color: #0e1324;
 }
-
 .space {
   background: radial-gradient(ellipse at 35% 40%, #1c2844, #080d1b 75%);
 }
-
 .info {
   background: var(--panel);
 }
-
 .star {
   background: #e4dffa;
 }
-
 .space-label,
 .coordinates,
 .view-note {
   color: #acb8d6;
 }
-
 .orbital-line {
   border-color: #b5a2ed30;
 }
-
 .pause {
   color: #d4d9ed;
   background: #171e3380;
   border-color: #596586;
 }
-
 .pause:hover {
   background: var(--hover);
 }
-
 .description,
 .fact {
   color: var(--muted);
@@ -771,43 +675,35 @@ h1 em,
 .planet-button {
   color: #c2c9de;
 }
-
 .planet-button:hover {
   background: var(--hover);
 }
-
 .planet-button[aria-pressed="true"] {
   background: var(--selected);
   color: var(--ink);
 }
-
 /* Respostas do desafio */
 .answer,
 .next {
   border-color: #596586;
 }
-
 .answer:hover:not(:disabled),
 .next:hover {
   background: var(--hover);
 }
-
 .answer.correct {
   background: #203c37;
   border-color: #75c9a9;
   color: #bcf1dc;
 }
-
 .answer.wrong {
   background: #462c39;
   border-color: #e49bad;
   color: #ffd1dc;
 }
-
 .feedback {
   color: #c2c9de;
 }
-
 .telescopes {
   border-top: 1px solid var(--line);
   padding: 48px 0 36px;
@@ -862,18 +758,385 @@ h1 em,
   .telescope-sources { flex-direction: column; gap: 8px; }
 }
 
+/* ============================================================
+   NOVO LAYOUT — OBSERVATÓRIO DIGITAL
+   Uma única linguagem visual para todas as seções.
+   ============================================================ */
+:root {
+  color-scheme: dark;
+  --paper: #090e1d;
+  --ink: #f6f5fc;
+  --muted: #aab4ce;
+  --line: #303957;
+  --orange: #f5bf86;
+  --accent: #b9a8fb;
+  --panel: #151c32;
+  --hover: #27304e;
+  --selected: #333458;
+}
+
+body {
+  min-width: 280px;
+  background:
+    radial-gradient(ellipse 58% 40% at 84% 0%, #31284e59 0%, transparent 75%),
+    radial-gradient(ellipse 55% 28% at 6% 54%, #152a4650 0%, transparent 80%),
+    var(--paper);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 12px;
+  left: 12px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: var(--orange);
+  color: #15182a;
+  transform: translateY(-160%);
+}
+.skip-link:focus { transform: translateY(0); }
+
+header {
+  max-width: none;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 18px max(5vw, calc((100vw - 1440px)/2));
+  border-bottom: 1px solid #ffffff18;
+  background: #090e1ddb;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  gap: 26px;
+}
+
+.brand { font-size: 26px; font-weight: 750; letter-spacing: -1.6px; }
+.brand-mark { font-size: 35px; color: var(--accent); }
+.brand-period { color: var(--orange); }
+nav { gap: 8px; font-size: 12px; font-weight: 550; }
+nav a {
+  padding: 11px 16px;
+  border-radius: 999px;
+  color: #cbd3e5;
+  transition: background .2s, color .2s;
+}
+nav a:hover { background: #ffffff0e; color: #fff; }
+nav .nav-feature { border: 1px solid #646088; color: #f4edff; }
+nav .nav-feature:hover { background: #383352; }
+.status { color: #bcc6db; letter-spacing: .6px; white-space: nowrap; }
+.dot { width: 7px; height: 7px; box-shadow: 0 0 0 5px #91d9bd15, 0 0 12px #91d9bd80; }
+
+main { max-width: 1440px; padding: 0 5vw; }
+section[id] { scroll-margin-top: 100px; }
+
+.intro {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 315px);
+  align-items: center;
+  gap: clamp(25px, 6vw, 100px);
+  padding: clamp(58px, 7.5vw, 112px) 0 clamp(70px, 8vw, 112px);
+}
+.eyebrow { font-size: 10px; font-weight: 650; letter-spacing: 2px; color: #bfc7dd; }
+.eyebrow-line { display: inline-block; width: 22px; height: 1px; background: var(--orange); vertical-align: middle; margin-right: 7px; }
+h1 {
+  max-width: 940px;
+  margin: 22px 0 25px;
+  font-size: clamp(54px, 6.5vw, 100px);
+  line-height: .99;
+  letter-spacing: -.065em;
+  font-weight: 620;
+}
+h1 em, .section-heading h2 em, .telescopes h2 em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.intro .hero-summary {
+  max-width: 590px;
+  margin: 0;
+  font-size: clamp(14px, 1.35vw, 16px);
+  line-height: 1.85;
+  color: var(--muted);
+}
+.hero-actions { display: flex; align-items: center; gap: 21px; flex-wrap: wrap; margin-top: 30px; }
+.primary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 29px;
+  min-height: 50px;
+  padding: 14px 20px;
+  background: var(--orange);
+  border: 1px solid var(--orange);
+  border-radius: 12px;
+  color: #171827;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 750;
+  box-shadow: 0 12px 35px #f5bf861c;
+  transition: transform .2s, box-shadow .2s;
+}
+.primary-cta:hover { transform: translateY(-2px); box-shadow: 0 15px 45px #f5bf8638; }
+.hero-caption { font: 10px/1.5 ui-monospace, Consolas, monospace; letter-spacing: .5px; color: #8592b0; }
+
+.hero-aside {
+  position: relative;
+  isolation: isolate;
+  min-height: 300px;
+  padding: 30px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  border: 1px solid #69638e72;
+  border-radius: 22px;
+  background: radial-gradient(circle at 70% 12%, #5a46787a, transparent 53%), linear-gradient(140deg, #202644 0%, #131a2e 100%);
+  box-shadow: 0 20px 75px #05081558, inset 0 1px #ffffff17;
+}
+.hero-aside::before, .hero-aside::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border: 1px solid #b9a8fb40;
+  border-radius: 50%;
+  width: 300px;
+  height: 135px;
+  top: -12px;
+  right: -106px;
+  transform: rotate(-30deg);
+}
+.hero-aside::after { top: -30px; right: -120px; width: 330px; height: 165px; border-color: #b9a8fb19; }
+.hero-aside-orbit { position: absolute; top: 22px; right: 30px; font-size: 35px; font-weight: 200; color: var(--orange); }
+.hero-aside-label, .hero-aside-bottom { font: 9px/1.5 ui-monospace, Consolas, monospace; letter-spacing: 1.2px; color: #aeb9d4; }
+.hero-aside strong { margin: 8px 0 0; font-size: 68px; font-weight: 500; line-height: 1; letter-spacing: -5px; }
+.hero-aside strong span { font-size: 23px; letter-spacing: -.5px; font-weight: 400; color: #d2caeb; }
+.hero-aside p { max-width: 225px; margin: 10px 0 19px; font-size: 13px; line-height: 1.7; color: #aebbd6; }
+.hero-aside-bottom { border-top: 1px solid #ffffff25; padding-top: 15px; width: 100%; }
+
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 35px; margin-bottom: 25px; }
+.section-heading h2 { margin: 12px 0 0; font-size: clamp(31px, 3.5vw, 48px); line-height: 1.08; letter-spacing: -1.8px; }
+.section-heading p { max-width: 290px; margin: 0 0 2px; color: var(--muted); font-size: 13px; line-height: 1.75; }
+.explorer {
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, .95fr);
+  min-height: 510px;
+  border-color: #455071;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 90px #02040c66;
+}
+.space {
+  min-height: 510px;
+  background: radial-gradient(circle at 50% 46%, #273d62 0%, #13223d 34%, #0b1328 68%, #070e1e 100%);
+}
+.space::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 50%, #0000001b 50%), linear-gradient(90deg, transparent 50%, #ffffff06 50%);
+  background-size: 100% 6px, 6px 100%;
+  opacity: .14;
+  pointer-events: none;
+}
+.orbital-line { width: 76%; height: 68%; border-color: #b2a4ec3d; }
+.orbital-line.second { width: 112%; height: 49%; border-color: #9eb8e724; }
+.planet { width: clamp(205px, 20vw, 275px); height: clamp(205px, 20vw, 275px); box-shadow: inset -65px -15px 70px #000b,inset 6px 4px 15px #ffffff50,0 0 85px #a7a6eb2b, 0 23px 55px #0008; }
+.planet.saturn { width: 195px; height: 195px; }
+.space-label, .coordinates, .view-note { color: #aab9d7; }
+.space-label { top: 28px; left: 29px; letter-spacing: 1.5px; }
+.coordinates { bottom: 27px; left: 29px; }
+.view-note { bottom: 27px; right: 27px; }
+.pause { top: 20px; right: 23px; border-radius: 8px; padding: 10px 13px; background: #141c34aa; }
+.info { background: linear-gradient(150deg, #1a233c, #121a30); padding: clamp(28px, 3.6vw, 52px); }
+.tag { color: var(--orange); letter-spacing: 1.5px; }
+.index { color: #b7c1d6; }
+.info h2 { margin: 15px 0 10px; font-size: clamp(43px, 4.3vw, 62px); line-height: 1.05; letter-spacing: -2.5px; }
+.description { color: #b0bdd4; margin-bottom: 29px; font-size: 14px; line-height: 1.8; }
+.stats { gap: 24px 18px; border-color: #ffffff23; padding-top: 25px; }
+.stat-label { color: #919fbc; font-size: 9px; letter-spacing: .8px; line-height: 1.45; }
+.stat-value { font-size: clamp(15px, 1.45vw, 20px); color: #f7f7ff; font-weight: 590; }
+.fact { margin-top: 30px; padding: 15px 17px; border: 1px solid #b9a8fb35; border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; background: #b9a8fb0b; color: #c2c9df; }
+.fact strong { color: #e7dafa; margin-bottom: 7px; font-size: 10px; letter-spacing: .8px; }
+
+.selector-head { padding: 26px 2px 14px; color: #aab7d0; font-weight: 650; }
+.planets { gap: 10px; grid-template-columns: repeat(8, minmax(0, 1fr)); border: 0; }
+.planet-button {
+  min-height: 103px;
+  padding: 16px 7px;
+  gap: 13px;
+  border: 1px solid #303b5b;
+  border-radius: 13px;
+  background: #151c31;
+  color: #c9d0e3;
+  font-size: 12px;
+  font-weight: 540;
+  transition: background .2s, border-color .2s, transform .2s, box-shadow .2s;
+}
+.planet-button:last-child { border-right: 1px solid #303b5b; }
+.planet-button:hover { background: #242e4b; border-color: #6c6799; transform: translateY(-3px); }
+.planet-button[aria-pressed="true"] { color: #fff; background: #2a2d50; border-color: #b9a8fb; box-shadow: inset 0 0 0 1px #b9a8fb33, 0 8px 22px #0003; }
+.planet-button[aria-pressed="true"]::after { left: 32%; right: 32%; height: 2px; bottom: 0; border-radius: 2px 2px 0 0; background: var(--orange); }
+.mini { width: 30px; height: 30px; }
+
+.bottom { grid-template-columns: 1fr 1fr; gap: 18px; padding: 65px 0 42px; }
+.perspective, .quiz { min-width: 0; min-height: 340px; border: 1px solid #303a56; border-radius: 22px; padding: clamp(25px, 3.1vw, 42px); }
+.perspective { position: relative; overflow: hidden; background: radial-gradient(circle at 95% 0%, #403752b0, transparent 55%), #1c223a; }
+.perspective-symbol { position: absolute; right: 28px; top: 22px; font-size: 47px; color: #f5bf86; opacity: .6; }
+.bottom h3 { position: relative; margin: 24px 0 14px; font-size: clamp(22px, 2.45vw, 34px); line-height: 1.2; letter-spacing: -1px; }
+.bottom p { color: #b3bfd7; font-size: 13px; line-height: 1.85; }
+.quiet-link { margin-top: 13px; padding-bottom: 5px; font-size: 12px; color: var(--orange); border-bottom: 1px solid var(--orange); }
+.quiz { border-left: 1px solid #303a56; background: #141c32; }
+.quiz h3 { margin: 19px 0 14px; font-size: clamp(21px, 2.1vw, 28px); }
+.question { margin: 8px 0 20px; font-size: 15px; color: #e4e8f6; }
+.answers { gap: 9px; }
+.answer, .next { padding: 11px 16px; border: 1px solid #526282; border-radius: 9px; font-size: 12px; background: #1d2842; color: #edf1fc; transition: background .2s, border-color .2s; }
+.answer:hover:not(:disabled), .next:hover { background: #344265; border-color: var(--accent); }
+.feedback { min-height: 20px; color: #bfcae0; }
+.next { margin-top: 5px; background: #39345a; border-color: #8275ae; }
+
+.telescopes { margin-top: 5px; padding: 45px 0 78px; border-top: 1px solid var(--line); }
+.telescope-intro { gap: clamp(25px, 5vw, 75px); margin-bottom: 32px; }
+.telescopes h2 { margin: 16px 0 18px; font-size: clamp(39px, 4.3vw, 61px); letter-spacing: -2.4px; }
+.telescope-lead { font-size: 15px; max-width: 570px; line-height: 1.85; }
+.telescope-art { margin: 0; border: 1px solid #3c4666; border-radius: 20px; padding: 8px 16px 15px; background: radial-gradient(circle at 54% 36%, #3e396b99, #171e34 70%); }
+.telescope-art svg { max-height: 230px; }
+.telescope-art figcaption { color: #bac1d9; }
+.telescope-types { gap: 15px; border: 0; }
+.telescope-type { display: flex; flex-direction: column; min-height: 314px; padding: 29px; background: #161e34; border: 1px solid #36405d; border-radius: 18px; transition: transform .2s, border-color .2s, box-shadow .2s; }
+.telescope-type:last-child { border-right: 1px solid #36405d; }
+.telescope-type:hover { transform: translateY(-4px); border-color: #8b7fbb; box-shadow: 0 16px 32px #0307153b; }
+.telescope-meta { color: var(--orange); }
+.telescope-meta span:last-child { color: var(--accent); }
+.telescopes h3 { margin: 23px 0 12px; font-size: 26px; font-weight: 600; }
+.telescope-type p, .telescope-notes p { color: #aebbd3; font-size: 13px; }
+.telescope-detail { margin-top: auto; padding-top: 20px; border-top: 1px solid #ffffff1e; }
+.telescope-detail strong { color: #f0edfa; font-weight: 650; }
+.telescope-notes { gap: 35px; margin-top: 24px; }
+.aperture-note, .telescope-questions { background: #141b30; border: 1px solid #303b59; border-radius: 17px; padding: 25px 28px; }
+.aperture-note { border-left: 3px solid var(--orange); }
+.aperture-note h3 { margin-top: 14px; }
+.telescope-questions details:last-child { border-bottom: 0; }
+.telescope-questions summary { font-weight: 540; }
+.telescope-sources { margin-top: 28px; font-size: 11px; color: #9ba9c4; }
+.telescope-sources a { color: #e1c7a4; }
+
+footer { padding: 30px 0 38px; border-color: #303957; }
+.footer-logo { color: #f3eafc; font-size: 17px; letter-spacing: -.7px; }
+footer a:hover { color: var(--orange); }
+
+@media (max-width: 1100px) {
+  header { gap: 14px; }
+  .status { display: none; }
+  .intro { grid-template-columns: 1fr 255px; gap: 30px; }
+  h1 { font-size: clamp(52px, 6vw, 74px); }
+  .hero-aside { min-height: 275px; padding: 24px; }
+  .explorer { grid-template-columns: 1.12fr 1fr; }
+  .info { padding: 31px; }
+  .telescope-type { padding: 23px; }
+}
+
+@media (max-width: 760px) {
+  header { padding: 15px 5vw; flex-wrap: wrap; gap: 14px; }
+  header nav { width: 100%; justify-content: space-between; gap: 6px; }
+  nav a { padding: 9px 10px; }
+  .intro { grid-template-columns: 1fr; gap: 35px; padding: 60px 0 67px; }
+  h1 { font-size: clamp(49px, 9vw, 73px); }
+  .hero-aside { min-height: 210px; padding: 26px; }
+  .hero-aside strong { font-size: 59px; }
+  .hero-aside p { max-width: 390px; }
+  .section-heading { align-items: start; flex-direction: column; gap: 12px; }
+  .section-heading p { max-width: 490px; }
+  .explorer { grid-template-columns: 1fr; }
+  .space { min-height: 390px; }
+  .planet { width: 225px; height: 225px; }
+  .info { padding: 32px; }
+  .info h2 { font-size: 51px; }
+  .planets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .planet-button, .planet-button:nth-child(4), .planet-button:last-child { border: 1px solid #303b5b; }
+  .planet-button:nth-child(-n+4) { border-bottom: 1px solid #303b5b; }
+  .bottom { grid-template-columns: 1fr; gap: 14px; padding-top: 44px; }
+  .perspective, .quiz { min-height: auto; padding: 30px; }
+  .telescope-intro, .telescope-notes { grid-template-columns: 1fr; }
+  .telescope-types { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .telescope-type, .telescope-type:last-child { border: 1px solid #36405d; }
+  .telescope-art svg { max-height: 230px; }
+}
+
+@media (max-width: 510px) {
+  header { padding: 13px 5vw; }
+  .brand { font-size: 24px; }
+  nav { font-size: 11px; }
+  nav a { padding: 9px 8px; white-space: nowrap; }
+  .intro { padding: 47px 0 53px; }
+  h1 { font-size: clamp(43px, 11vw, 56px); letter-spacing: -.06em; }
+  .intro .hero-summary { font-size: 14px; }
+  .hero-caption { display: none; }
+  .hero-aside { min-height: 215px; }
+  .section-heading h2 { font-size: 35px; }
+  .explorer { border-radius: 18px; }
+  .space { min-height: 325px; }
+  .planet { width: 190px; height: 190px; }
+  .planet.saturn { width: 160px; height: 160px; }
+  .space-label { top: 19px; left: 18px; }
+  .pause { top: 13px; right: 13px; padding: 9px 10px; font-size: 9px; }
+  .coordinates { bottom: 20px; left: 18px; font-size: 9px; }
+  .info { padding: 24px; }
+  .info h2 { font-size: 47px; }
+  .stats { gap: 22px 13px; }
+  .planets { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
+  .planet-button { min-height: 92px; padding: 12px 3px; font-size: 10px; gap: 10px; }
+  .mini { width: 25px; height: 25px; }
+  .selector-head { font-size: 8px; }
+  .perspective, .quiz { padding: 26px 22px; }
+  .telescope-types { grid-template-columns: 1fr; }
+  .telescope-type { min-height: 0; padding: 26px; }
+  .telescope-detail { margin-top: 24px; }
+  .telescope-notes { gap: 12px; }
+  .aperture-note, .telescope-questions { padding: 23px; }
+  footer { gap: 10px; }
+}
 </style>
 </head>
 <body>
-<header><a href="#" class="brand" aria-label="Órbita, início"><span class="brand-mark" aria-hidden="true">◎</span> órbita.</a><nav aria-label="Navegação principal"><a href="#explorar">Explorar</a><a href="#telescopios">Telescópios</a><a href="#desafio">Desafio cósmico ↗</a></nav><span class="status"><span class="dot"></span>Um pequeno planetário</span></header>
+<a class="skip-link" href="#explorar">Ir para a exploração</a>
+<header>
+  <a href="#inicio" class="brand" aria-label="Órbita, início"><span class="brand-mark" aria-hidden="true">◎</span><span>órbita<span class="brand-period">.</span></span></a>
+  <nav aria-label="Navegação principal">
+    <a href="#explorar">Explorar</a>
+    <a href="#telescopios">Telescópios</a>
+    <a href="#desafio" class="nav-feature">Desafio cósmico <span aria-hidden="true">↗</span></a>
+  </nav>
+  <span class="status"><span class="dot"></span> Observatório digital</span>
+</header>
 <main>
-<section class="intro"><div><div class="eyebrow">Caderno de exploração · Sistema Solar</div><h1>O universo começa<br>com uma <em>curiosidade.</em></h1></div><p>Oito mundos. Infinitas perguntas.<br>Escolha um planeta e descubra o que existe além do nosso horizonte.</p></section>
+<section class="intro" id="inicio" aria-labelledby="hero-title">
+  <div class="intro-main">
+    <div class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> Uma viagem pelo Sistema Solar</div>
+    <h1 id="hero-title">O universo começa<br>com uma <em>curiosidade.</em></h1>
+    <p class="hero-summary">Uma experiência interativa para conhecer os mundos que orbitam nossa estrela. Escolha seu destino e comece a explorar.</p>
+    <div class="hero-actions">
+      <a class="primary-cta" href="#explorar">Começar exploração <span aria-hidden="true">↗</span></a>
+      <span class="hero-caption">Sem foguete. Só curiosidade.</span>
+    </div>
+  </div>
+  <div class="hero-aside" aria-label="Sobre o planetário">
+    <span class="hero-aside-orbit" aria-hidden="true">✺</span>
+    <span class="hero-aside-label">SEU GUIA DE BOLSO PELO COSMOS</span>
+    <strong>08<span> mundos</span></strong>
+    <p>De Mercúrio a Netuno, uma nova perspectiva a cada clique.</p>
+    <span class="hero-aside-bottom">01 / INÍCIO DA JORNADA</span>
+  </div>
+</section>
 <section id="explorar" aria-label="Explorador de planetas">
+<div class="section-heading"><div><span class="eyebrow">01 / EXPERIÊNCIA INTERATIVA</span><h2>Explore nosso <em>quintal cósmico.</em></h2></div><p>Selecione um planeta para revelar suas características e curiosidades.</p></div>
 <div class="explorer"><div class="space" id="space"><div class="stars" id="stars" aria-hidden="true"></div><span class="space-label">OBSERVATÓRIO / <span id="view-index">03</span></span><button class="pause" id="pause" aria-pressed="false">Ⅱ Pausar movimento</button><div class="orbital-line" aria-hidden="true"></div><div class="orbital-line second" aria-hidden="true"></div><div class="planet" id="planet" role="img" aria-label="Ilustração estilizada da Terra"><div class="terrain" id="terrain"><svg viewBox="0 0 240 240" aria-hidden="true"><g fill="#8caa79"><path d="M25 40 49 29 65 33 73 43 99 40 112 54 98 67 103 78 83 89 71 110 57 108 51 90 32 80 19 60Z"/><path d="m75 116 18-7 25 17 7 24-13 22-11 35-13-13-1-27-14-21Z"/><path d="m124 35 30-16 46 20 24 29-18 12-27-10-10 14-17-2-10-17-19-4Z"/><path d="m135 86 29-6 21 21-6 29-19 26-16-13-3-27-17-13Z"/><path d="m194 156 25-6 14 24-18 15-28-10Z"/></g><g fill="none" stroke="#e5eee3" stroke-width="7" opacity=".27"><path d="M14 104Q80 54 161 82T244 75M-8 148q77-41 159 3t88-4M60 25q85 19 157-1"/></g></svg></div><div class="rings" aria-hidden="true"></div></div><span class="coordinates" id="coordinates">SOL → 149,6 MILHÕES DE KM</span><span class="view-note">ILUSTRAÇÃO · SEM ESCALA</span></div>
 <div class="info" aria-live="polite" aria-atomic="true"><div class="info-top"><span class="tag" id="type">PLANETA ROCHOSO</span><span class="index" id="index">03 / 08</span></div><h2 id="name">Terra</h2><p class="description" id="description"></p><div class="stats"><div><span class="stat-label">Diâmetro</span><span class="stat-value" id="diameter"></span></div><div><span class="stat-label">Uma volta ao Sol</span><span class="stat-value" id="year"></span></div><div><span class="stat-label">Distância média do Sol</span><span class="stat-value" id="distance"></span></div><div><span class="stat-label">Ordem a partir do Sol</span><span class="stat-value" id="order"></span></div></div><div class="fact"><strong>UM DETALHE EXTRAORDINÁRIO</strong><span id="fact"></span></div></div></div>
 <div class="selector-head"><span>Escolha seu próximo destino</span><span>01 — 08 / Planetas</span></div><div class="planets" id="planet-list" aria-label="Selecionar planeta"></div>
 </section>
-<section class="bottom"><div><div class="eyebrow">Uma questão de perspectiva</div><h3>Somos um pequeno ponto.<br>E temos tanto para descobrir.</h3><p>A luz do Sol leva cerca de 8 minutos e 20 segundos para chegar à Terra. Olhar para o céu também é olhar para o passado.</p><button class="quiet-link" id="random">Me leve a outro mundo ↗</button></div><div class="quiz" id="desafio"><div class="eyebrow">Desafio cósmico · <span id="question-count">01 / 03</span></div><div class="question" id="question"></div><div class="answers" id="answers"></div><div class="feedback" id="feedback" role="status"></div><button class="next" id="next" hidden>Próxima pergunta →</button></div></section>
+<section class="bottom"><div class="perspective"><div class="eyebrow">02 / UMA QUESTÃO DE PERSPECTIVA</div><div class="perspective-symbol" aria-hidden="true">✦</div><h3>Somos um pequeno ponto.<br>E temos tanto para descobrir.</h3><p>A luz do Sol leva cerca de 8 minutos e 20 segundos para chegar à Terra. Olhar para o céu também é olhar para o passado.</p><button class="quiet-link" id="random">Me leve a outro mundo <span aria-hidden="true">↗</span></button></div><div class="quiz" id="desafio"><div class="eyebrow">03 / DESAFIO CÓSMICO · <span id="question-count">01 / 03</span></div><h3>Hora de testar sua curiosidade.</h3><div class="question" id="question"></div><div class="answers" id="answers"></div><div class="feedback" id="feedback" role="status"></div><button class="next" id="next" hidden>Próxima pergunta →</button></div></section>
 <section class="telescopes" id="telescopios" aria-labelledby="telescopes-title">
   <div class="telescope-intro">
     <div>
@@ -931,11 +1194,9 @@ h1 em,
   </div>
   <p class="telescope-sources">Continue explorando: <a href="https://science.nasa.gov/universe/telescopes-101/" target="_blank" rel="noopener noreferrer">Telescópios na NASA ↗</a><a href="https://abramsplanetarium.natsci.msu.edu/additional-resources/telescope-guide.aspx" target="_blank" rel="noopener noreferrer">Guia do Abrams Planetarium ↗</a><span>Fontes em inglês.</span></p>
 </section>
-
 <footer><span class="footer-logo">◎ órbita.</span><span>Feito para quem nunca deixou de perguntar.</span><a href="#" id="download">Baixar este HTML ↓</a></footer>
 </main>
 <script>
-
 const planets = [
 {name:'Mercúrio',kind:'Planeta rochoso',diameter:'4.879 km',year:'88 dias',distance:'57,9 mi km',solar:'57,9 milhões de km',description:'Pequeno, veloz e vizinho do Sol. Um mundo de crateras e contrastes extremos.',fact:'Apesar de ser o planeta mais próximo do Sol, não é o mais quente. Esse título pertence a Vênus.',texture:'radial-gradient(circle at 30% 30%,#b2aba0,#777165 55%,#393c36)'},
 {name:'Vênus',kind:'Planeta rochoso',diameter:'12.104 km',year:'225 dias',distance:'108,2 mi km',solar:'108,2 milhões de km',description:'Um mundo envolto em nuvens espessas, com uma atmosfera que retém calor intensamente.',fact:'Vênus leva cerca de 243 dias terrestres para girar sobre seu eixo: mais tempo do que leva para dar uma volta ao Sol.',texture:'repeating-linear-gradient(165deg,#d9bc80 0%,#d9bc80 6%,#b59866 13%,#e7cd97 20%)'},
@@ -950,34 +1211,27 @@ const byId = id => document.getElementById(id);
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 let travelAnimations = [];
 let shootingStar = null;
-
 function stopPlanetAnimation() {
   travelAnimations.forEach(animation => animation.cancel());
   travelAnimations = [];
   shootingStar?.remove();
   shootingStar = null;
 }
-
 function animatePlanetChange() {
   stopPlanetAnimation();
-
   const space = document.getElementById('space');
   const planet = document.getElementById('planet');
   const info = document.querySelector('.info');
-
   if (motionPreference.matches || space.classList.contains('paused') ||
       document.hidden || typeof planet.animate !== 'function') return;
-
   travelAnimations.push(planet.animate([
     { opacity: 0, transform: 'translateX(-30px) scale(0.8)' },
     { opacity: 1, transform: 'translateX(0) scale(1)' }
   ], { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }));
-
   travelAnimations.push(info.animate([
     { opacity: 0, transform: 'translateY(10px)' },
     { opacity: 1, transform: 'translateY(0)' }
   ], { duration: 450, easing: 'ease-out' }));
-
   const star = document.createElement('span');
   star.className = 'shooting-star';
   star.setAttribute('aria-hidden', 'true');
@@ -990,7 +1244,6 @@ function animatePlanetChange() {
   });
   space.append(star);
   shootingStar = star;
-
   const distance = space.clientWidth + 240;
   const drop = Math.min(space.clientHeight * 0.45, distance * 0.32);
   const angle = Math.atan2(drop, distance) * 180 / Math.PI;
@@ -1000,21 +1253,17 @@ function animatePlanetChange() {
     { opacity: 1, offset: 0.8 },
     { opacity: 0, transform: `translate(${distance}px, ${drop}px) rotate(${angle}deg)` }
   ], { duration: 1000, easing: 'linear' });
-
   travelAnimations.push(flight);
   flight.finished.then(() => {
     star.remove();
     if (shootingStar === star) shootingStar = null;
   }, () => star.remove());
 }
-
 motionPreference.addEventListener('change', stopPlanetAnimation);
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) stopPlanetAnimation();
 });
-
 let current = 2;
-
 for(let i=0;i<65;i++){const star=document.createElement('i');star.className='star';star.style.cssText=`left:${(i*67.31)%100}%;top:${(i*37.19)%100}%;width:${i%5===0?2:1}px;height:${i%5===0?2:1}px`;byId('stars').append(star);}
 planets.forEach((p,i)=>{const button=document.createElement('button');button.className='planet-button';button.setAttribute('aria-pressed','false');button.innerHTML=`<span class="mini ${i===5?'ringed':''}" style="--texture:${p.texture}" aria-hidden="true"></span><span>${p.name}</span>`;button.addEventListener('click',()=>selectPlanet(i));byId('planet-list').append(button);});
 function selectPlanet(i){const changed = current !== i;current=i;const p=planets[i];['name','description','diameter','year','distance','fact'].forEach(key=>byId(key).textContent=p[key]);byId('type').textContent=p.kind.toUpperCase();const n=String(i+1).padStart(2,'0');byId('index').textContent=n+' / 08';byId('view-index').textContent=n;byId('order').textContent=(i+1)+'º planeta';byId('coordinates').textContent='SOL → '+p.solar.toUpperCase();byId('planet').style.setProperty('--texture',p.texture);byId('planet').className='planet'+(i===5?' saturn':'');byId('planet').setAttribute('aria-label','Ilustração estilizada de '+p.name);byId('terrain').hidden=i!==2;[...byId('planet-list').children].forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));if (changed) animatePlanetChange();}
@@ -1025,7 +1274,6 @@ const questions=[{q:'Qual planeta tem o dia de rotação mais longo que o seu an
 let questionIndex=0,score=0;
 function renderQuestion(){const q=questions[questionIndex];byId('question-count').textContent=String(questionIndex+1).padStart(2,'0')+' / 03';byId('question').textContent=q.q;byId('answers').replaceChildren();byId('feedback').textContent='';byId('next').hidden=true;q.options.forEach((text,i)=>{const button=document.createElement('button');button.className='answer';button.textContent=text;button.addEventListener('click',()=>{if(i===q.correct)score++;[...byId('answers').children].forEach((b,j)=>{b.disabled=true;if(j===q.correct)b.classList.add('correct');else if(j===i)b.classList.add('wrong');});byId('feedback').textContent=(i===q.correct?'Você acertou! ':'A resposta é '+q.options[q.correct]+'. ')+q.explanation+(questionIndex===2?' Resultado: '+score+' de 3 acertos.':'');byId('next').textContent=questionIndex===2?'Tentar novamente ↺':'Próxima pergunta →';byId('next').hidden=false;});byId('answers').append(button);});}
 byId('next').addEventListener('click',()=>{questionIndex=(questionIndex+1)%questions.length;if(questionIndex===0)score=0;renderQuestion();byId('answers').firstElementChild.focus();});renderQuestion();
-
 byId('download').addEventListener('click',async event=>{event.preventDefault();try{if(location.protocol==='file:'){alert('Este arquivo HTML já está no seu computador. Você pode copiá-lo e editá-lo em qualquer editor de texto.');return;}const response=await fetch(location.href);if(!response.ok)throw new Error('download');const blob=new Blob([await response.text()],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='orbita.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch{alert('Não foi possível baixar agora. Use a opção “Salvar página como” do navegador.');}});
 </script>
 </body>
