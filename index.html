@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Um pequeno planetário para grandes curiosidades. Explore os oito planetas do Sistema Solar.">
+<title>Órbita — um pequeno planetário</title>
+<style>
+:root {
+  --paper: #f5f3e9;
+  --ink: #242621;
+  --muted: #73766d;
+  --line: #d8d9cf;
+  --orange: #ce4a2c;
+  --accent: #ce4a2c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 5px;
+}
+
+header {
+  max-width: 1400px;
+  margin: auto;
+  padding: 28px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: -1.6px;
+}
+
+.brand-mark {
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1;
+  transform: rotate(-25deg);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font-size: 13px;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--orange);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 10px monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background: #758163;
+  border-radius: 50%;
+}
+
+
+main {
+  max-width: 1400px;
+  margin: auto;
+  padding: 0 5%;
+}
+
+.intro {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 49px 0 33px;
+}
+
+.eyebrow {
+  color: var(--muted);
+  font: 10px monospace;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 16px 0 0;
+  font-size: clamp(42px, 5vw, 70px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -3px;
+}
+
+h1 em {
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+
+.intro p {
+  max-width: 280px;
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+.explorer {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  min-height: 425px;
+  border: 1px solid var(--line);
+}
+
+.space {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 425px;
+  overflow: hidden;
+  background: #101916;
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  background: #e2e8ce;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.space-label {
+  position: absolute;
+  z-index: 4;
+  top: 25px;
+  left: 26px;
+  color: #b1bdae;
+  font: 10px monospace;
+  letter-spacing: 1.6px;
+}
+
+.coordinates {
+  position: absolute;
+  z-index: 4;
+  bottom: 24px;
+  left: 26px;
+  color: #899c90;
+  font: 10px monospace;
+}
+
+.view-note {
+  position: absolute;
+  right: 25px;
+  bottom: 24px;
+  color: #a0b0a4;
+  font: 9px monospace;
+}
+
+.orbital-line {
+  position: absolute;
+  width: 78%;
+  height: 75%;
+  border: 1px solid #6e8c7030;
+  border-radius: 50%;
+  transform: rotate(-29deg);
+}
+
+.orbital-line.second {
+  width: 110%;
+  height: 52%;
+  transform: rotate(-29deg);
+}
+
+.planet {
+  position: relative;
+  z-index: 2;
+  width: 245px;
+  height: 245px;
+  background: var(--texture);
+  border-radius: 50%;
+  box-shadow:
+    inset -65px -15px 70px #000b,
+    inset 6px 4px 15px #ffffff50,
+    0 0 65px #88c5b31a;
+  transition: background 0.3s;
+  animation: float 8s ease-in-out infinite;
+}
+
+.planet::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: radial-gradient(circle at 28% 25%, #ffffff15, transparent 47%, #0008);
+  border-radius: 50%;
+}
+
+.terrain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+  opacity: 0.82;
+}
+
+.terrain svg {
+  width: 100%;
+  height: 100%;
+}
+
+.planet .rings {
+  position: absolute;
+  z-index: 4;
+  top: 33%;
+  left: -47%;
+  display: none;
+  width: 194%;
+  height: 33%;
+  border: 18px solid #d3bc8caf;
+  border-left-color: #dfc897;
+  border-right-color: #9d8b67;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #ddcca44d, 0 0 0 8px #a999733d;
+  transform: rotate(-27deg);
+}
+
+.planet.saturn {
+  width: 190px;
+  height: 190px;
+}
+
+.planet.saturn .rings {
+  display: block;
+}
+
+.planet.uranus {
+  transform: rotate(75deg);
+}
+
+@keyframes float {
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+.space.paused .planet {
+  animation-play-state: paused;
+}
+
+.pause {
+  position: absolute;
+  z-index: 5;
+  top: 17px;
+  right: 19px;
+  padding: 9px 12px;
+  color: #b8c5b9;
+  background: #ffffff08;
+  border: 1px solid #829c8340;
+  font: 10px monospace;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px 35px;
+}
+
+.info-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tag {
+  color: var(--orange);
+  font: 10px monospace;
+  letter-spacing: 1px;
+}
+
+.index {
+  color: var(--muted);
+  font: 11px monospace;
+}
+
+h2 {
+  margin: 14px 0 8px;
+  font-size: 49px;
+  font-weight: 500;
+  letter-spacing: -2px;
+}
+
+.description {
+  min-height: 47px;
+  margin: 0 0 23px;
+  color: #6a7065;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 12px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.stat-label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--muted);
+  font: 9px monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 19px;
+  letter-spacing: -0.5px;
+}
+
+.fact {
+  margin-top: 25px;
+  padding-left: 12px;
+  color: #676b60;
+  border-left: 2px solid var(--orange);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.fact strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--ink);
+  font-size: 11px;
+}
+
+
+.selector-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 0 15px;
+  color: var(--muted);
+  font: 10px monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.planets {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.planet-button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 19px 6px 16px;
+  color: #696e63;
+  background: none;
+  border: 0;
+  border-right: 1px solid var(--line);
+  font-size: 11px;
+  transition: background 0.2s;
+}
+
+.planet-button:last-child {
+  border-right: 0;
+}
+
+.planet-button:hover {
+  background: #eaeade;
+}
+
+.planet-button[aria-pressed="true"] {
+  color: #252c22;
+  background: #e8eadd;
+}
+
+.planet-button[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 3px;
+  background: var(--orange);
+}
+
+.mini {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  background: var(--texture);
+  border-radius: 50%;
+  box-shadow: inset -7px -3px 9px #0008;
+}
+
+.mini.ringed::after {
+  content: "";
+  position: absolute;
+  inset: 7px -9px;
+  border: 3px solid #beaa7d;
+  border-radius: 50%;
+  transform: rotate(-25deg);
+}
+
+
+
+.bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  padding: 43px 0;
+}
+
+.bottom h3 {
+  margin: 12px 0;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+}
+
+.bottom p {
+  max-width: 440px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.quiz {
+  padding-left: 40px;
+  border-left: 1px solid var(--line);
+}
+
+.question {
+  margin: 11px 0 16px;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.answer,
+.next {
+  padding: 9px 16px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid #babfb1;
+  font-size: 12px;
+}
+
+.answer:hover:not(:disabled),
+.next:hover {
+  background: #e6e8db;
+}
+
+.answer:disabled {
+  cursor: default;
+}
+
+.answer.correct {
+  color: #304423;
+  background: #dce4cb;
+  border-color: #829364;
+}
+
+.answer.wrong {
+  background: #f1d9d1;
+  border-color: #bd7662;
+}
+
+.feedback {
+  min-height: 36px;
+  margin-top: 12px;
+  color: #5a6552;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.next {
+  margin-top: 8px;
+}
+
+.next[hidden] {
+  display: none;
+}
+
+.quiet-link {
+  padding: 0;
+  color: var(--orange);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--orange);
+  font: 11px monospace;
+  text-underline-offset: 5px;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0 28px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font: 10px monospace;
+}
+
+.footer-logo {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+footer a {
+  text-underline-offset: 4px;
+}
+
+
+@media (min-width: 1450px) {
+  .space {
+    min-height: 480px;
+  }
+
+  .planet {
+    width: 285px;
+    height: 285px;
+  }
+}
+
+
+@media (max-width: 850px) {
+  .status {
+    display: none;
+  }
+
+  .explorer {
+    grid-template-columns: 1.1fr 1fr;
+  }
+
+  .info {
+    padding: 26px 22px;
+  }
+
+  .planet {
+    width: 210px;
+    height: 210px;
+  }
+
+  .space {
+    min-height: 430px;
+  }
+
+  .intro p {
+    max-width: 230px;
+  }
+
+  .bottom {
+    gap: 25px;
+  }
+
+  .quiz {
+    padding-left: 25px;
+  }
+
+  .view-note {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 20px 6%;
+  }
+
+  .brand {
+    font-size: 25px;
+  }
+
+  nav {
+    gap: 18px;
+    font-size: 11px;
+  }
+
+  main {
+    padding: 0 6%;
+  }
+
+  .intro {
+    display: block;
+    padding: 33px 0 25px;
+  }
+
+  h1 {
+    font-size: 47px;
+    letter-spacing: -2.5px;
+  }
+
+  .intro p {
+    max-width: 310px;
+    margin-top: 19px;
+    font-size: 13px;
+  }
+
+  .explorer {
+    grid-template-columns: 1fr;
+  }
+
+  .space {
+    min-height: 325px;
+  }
+
+  .planet {
+    width: 210px;
+    height: 210px;
+  }
+
+  .info {
+    padding: 24px;
+  }
+
+  .description {
+    min-height: 0;
+  }
+
+  .planets {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .planet-button {
+    gap: 9px;
+    padding: 16px 6px;
+  }
+
+  .planet-button:nth-child(4) {
+    border-right: 0;
+  }
+
+  .planet-button:nth-child(-n + 4) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .selector-head {
+    font-size: 9px;
+  }
+
+  .bottom {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 0;
+  }
+
+  .quiz {
+    padding: 25px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  footer {
+    align-items: start;
+    flex-wrap: wrap;
+    line-height: 1.6;
+  }
+
+  .footer-logo {
+    width: 100%;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .planet {
+    animation: none;
+  }
+
+  * {
+    transition: none !important;
+  }
+}
+
+</style>
+</head>
+<body>
+<header><a href="#" class="brand" aria-label="Órbita, início"><span class="brand-mark" aria-hidden="true">◎</span> órbita.</a><nav aria-label="Navegação principal"><a href="#explorar">Explorar</a><a href="#desafio">Desafio cósmico ↗</a></nav><span class="status"><span class="dot"></span>Um pequeno planetário</span></header>
+<main>
+<section class="intro"><div><div class="eyebrow">Caderno de exploração · Sistema Solar</div><h1>O universo começa<br>com uma <em>curiosidade.</em></h1></div><p>Oito mundos. Infinitas perguntas.<br>Escolha um planeta e descubra o que existe além do nosso horizonte.</p></section>
+<section id="explorar" aria-label="Explorador de planetas">
+<div class="explorer"><div class="space" id="space"><div class="stars" id="stars" aria-hidden="true"></div><span class="space-label">OBSERVATÓRIO / <span id="view-index">03</span></span><button class="pause" id="pause" aria-pressed="false">Ⅱ Pausar movimento</button><div class="orbital-line" aria-hidden="true"></div><div class="orbital-line second" aria-hidden="true"></div><div class="planet" id="planet" role="img" aria-label="Ilustração estilizada da Terra"><div class="terrain" id="terrain"><svg viewBox="0 0 240 240" aria-hidden="true"><g fill="#8caa79"><path d="M25 40 49 29 65 33 73 43 99 40 112 54 98 67 103 78 83 89 71 110 57 108 51 90 32 80 19 60Z"/><path d="m75 116 18-7 25 17 7 24-13 22-11 35-13-13-1-27-14-21Z"/><path d="m124 35 30-16 46 20 24 29-18 12-27-10-10 14-17-2-10-17-19-4Z"/><path d="m135 86 29-6 21 21-6 29-19 26-16-13-3-27-17-13Z"/><path d="m194 156 25-6 14 24-18 15-28-10Z"/></g><g fill="none" stroke="#e5eee3" stroke-width="7" opacity=".27"><path d="M14 104Q80 54 161 82T244 75M-8 148q77-41 159 3t88-4M60 25q85 19 157-1"/></g></svg></div><div class="rings" aria-hidden="true"></div></div><span class="coordinates" id="coordinates">SOL → 149,6 MILHÕES DE KM</span><span class="view-note">ILUSTRAÇÃO · SEM ESCALA</span></div>
+<div class="info" aria-live="polite" aria-atomic="true"><div class="info-top"><span class="tag" id="type">PLANETA ROCHOSO</span><span class="index" id="index">03 / 08</span></div><h2 id="name">Terra</h2><p class="description" id="description"></p><div class="stats"><div><span class="stat-label">Diâmetro</span><span class="stat-value" id="diameter"></span></div><div><span class="stat-label">Uma volta ao Sol</span><span class="stat-value" id="year"></span></div><div><span class="stat-label">Distância média do Sol</span><span class="stat-value" id="distance"></span></div><div><span class="stat-label">Ordem a partir do Sol</span><span class="stat-value" id="order"></span></div></div><div class="fact"><strong>UM DETALHE EXTRAORDINÁRIO</strong><span id="fact"></span></div></div></div>
+<div class="selector-head"><span>Escolha seu próximo destino</span><span>01 — 08 / Planetas</span></div><div class="planets" id="planet-list" aria-label="Selecionar planeta"></div>
+</section>
+<section class="bottom"><div><div class="eyebrow">Uma questão de perspectiva</div><h3>Somos um pequeno ponto.<br>E temos tanto para descobrir.</h3><p>A luz do Sol leva cerca de 8 minutos e 20 segundos para chegar à Terra. Olhar para o céu também é olhar para o passado.</p><button class="quiet-link" id="random">Me leve a outro mundo ↗</button></div><div class="quiz" id="desafio"><div class="eyebrow">Desafio cósmico · <span id="question-count">01 / 03</span></div><div class="question" id="question"></div><div class="answers" id="answers"></div><div class="feedback" id="feedback" role="status"></div><button class="next" id="next" hidden>Próxima pergunta →</button></div></section>
+<footer><span class="footer-logo">◎ órbita.</span><span>Feito para quem nunca deixou de perguntar.</span><a href="#" id="download">Baixar este HTML ↓</a></footer>
+</main>
+<script>
+const planets = [
+{name:'Mercúrio',kind:'Planeta rochoso',diameter:'4.879 km',year:'88 dias',distance:'57,9 mi km',solar:'57,9 milhões de km',description:'Pequeno, veloz e vizinho do Sol. Um mundo de crateras e contrastes extremos.',fact:'Apesar de ser o planeta mais próximo do Sol, não é o mais quente. Esse título pertence a Vênus.',texture:'radial-gradient(circle at 30% 30%,#b2aba0,#777165 55%,#393c36)'},
+{name:'Vênus',kind:'Planeta rochoso',diameter:'12.104 km',year:'225 dias',distance:'108,2 mi km',solar:'108,2 milhões de km',description:'Um mundo envolto em nuvens espessas, com uma atmosfera que retém calor intensamente.',fact:'Vênus leva cerca de 243 dias terrestres para girar sobre seu eixo: mais tempo do que leva para dar uma volta ao Sol.',texture:'repeating-linear-gradient(165deg,#d9bc80 0%,#d9bc80 6%,#b59866 13%,#e7cd97 20%)'},
+{name:'Terra',kind:'Planeta rochoso',diameter:'12.742 km',year:'365,25 dias',distance:'149,6 mi km',solar:'149,6 milhões de km',description:'Nosso endereço no cosmos. Um mundo de oceanos, continentes e uma extraordinária diversidade de vida.',fact:'Cerca de 71% da superfície da Terra é coberta por água. Vista do espaço, nossa casa é um planeta azul.',texture:'radial-gradient(circle at 30% 25%,#80b8bd,#397684 48%,#1c424e)'},
+{name:'Marte',kind:'Planeta rochoso',diameter:'6.779 km',year:'687 dias',distance:'227,9 mi km',solar:'227,9 milhões de km',description:'Desertos avermelhados, calotas polares e marcas de rios antigos. Um mundo que guarda muitas perguntas.',fact:'Marte abriga o Monte Olimpo, um gigantesco vulcão com cerca de 22 km de altura em relação ao nível de referência marciano.',texture:'radial-gradient(ellipse at 30% 35%,#e3a37a 0%,transparent 38%),repeating-linear-gradient(150deg,#bc6c4c,#a4573e 15%,#ca7b56 32%)'},
+{name:'Júpiter',kind:'Gigante gasoso',diameter:'139.820 km',year:'11,86 anos',distance:'778,6 mi km',solar:'778,6 milhões de km',description:'O maior planeta do nosso sistema. Um gigante de faixas de nuvens e tempestades monumentais.',fact:'A Grande Mancha Vermelha é uma enorme tempestade observada há pelo menos 150 anos.',texture:'repeating-linear-gradient(175deg,#bc987b 0%,#e0c9a6 10%,#8f6b55 17%,#c5a181 21%,#e7d6b9 32%)'},
+{name:'Saturno',kind:'Gigante gasoso',diameter:'116.460 km',year:'29,45 anos',distance:'1,43 bi km',solar:'1,43 bilhão de km',description:'Um gigante de tons suaves, cercado pelo sistema de anéis mais marcante do Sistema Solar.',fact:'Seus anéis são formados por incontáveis pedaços de gelo e rocha, de grãos minúsculos a blocos enormes.',texture:'repeating-linear-gradient(170deg,#d6bd88 0%,#c3a777 12%,#e2cda4 21%,#c3ac83 30%)'},
+{name:'Urano',kind:'Gigante de gelo',diameter:'50.724 km',year:'84 anos',distance:'2,87 bi km',solar:'2,87 bilhões de km',description:'Azul-esverdeado, distante e peculiar. Um planeta cuja inclinação torna suas estações extraordinárias.',fact:'Seu eixo é inclinado cerca de 98 graus. É como se Urano rolasse de lado ao redor do Sol.',texture:'radial-gradient(circle at 30% 25%,#c4e3d9,#81b8b5 52%,#4f8386)'},
+{name:'Netuno',kind:'Gigante de gelo',diameter:'49.244 km',year:'165 anos',distance:'4,50 bi km',solar:'4,50 bilhões de km',description:'O último dos oito planetas. Um mundo frio, distante e varrido por ventos extremamente rápidos.',fact:'Netuno foi localizado em 1846 depois que cálculos matemáticos indicaram onde os astrônomos deveriam procurar.',texture:'repeating-linear-gradient(170deg,#729dbc 0%,#557fa6 20%,#81a9c5 36%,#5f86ab 50%)'}
+];
+const byId = id => document.getElementById(id);
+let current = 2;
+
+for(let i=0;i<65;i++){const star=document.createElement('i');star.className='star';star.style.cssText=`left:${(i*67.31)%100}%;top:${(i*37.19)%100}%;width:${i%5===0?2:1}px;height:${i%5===0?2:1}px`;byId('stars').append(star);}
+planets.forEach((p,i)=>{const button=document.createElement('button');button.className='planet-button';button.setAttribute('aria-pressed','false');button.innerHTML=`<span class="mini ${i===5?'ringed':''}" style="--texture:${p.texture}" aria-hidden="true"></span><span>${p.name}</span>`;button.addEventListener('click',()=>selectPlanet(i));byId('planet-list').append(button);});
+function selectPlanet(i){current=i;const p=planets[i];['name','description','diameter','year','distance','fact'].forEach(key=>byId(key).textContent=p[key]);byId('type').textContent=p.kind.toUpperCase();const n=String(i+1).padStart(2,'0');byId('index').textContent=n+' / 08';byId('view-index').textContent=n;byId('order').textContent=(i+1)+'º planeta';byId('coordinates').textContent='SOL → '+p.solar.toUpperCase();byId('planet').style.setProperty('--texture',p.texture);byId('planet').className='planet'+(i===5?' saturn':'');byId('planet').setAttribute('aria-label','Ilustração estilizada de '+p.name);byId('terrain').hidden=i!==2;[...byId('planet-list').children].forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));}
+selectPlanet(2);
+byId('random').addEventListener('click',()=>{selectPlanet((current+1+Math.floor(Math.random()*7))%8);byId('explorar').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});});
+byId('pause').addEventListener('click',()=>{const paused=byId('space').classList.toggle('paused');byId('pause').setAttribute('aria-pressed',String(paused));byId('pause').textContent=paused?'▷ Retomar movimento':'Ⅱ Pausar movimento';});
+const questions=[{q:'Qual planeta tem o dia de rotação mais longo que o seu ano?',options:['Marte','Vênus','Júpiter'],correct:1,explanation:'Vênus gira sobre seu eixo em cerca de 243 dias, mas contorna o Sol em cerca de 225.'},{q:'Qual é o maior planeta do Sistema Solar?',options:['Saturno','Terra','Júpiter'],correct:2,explanation:'Júpiter tem quase 140 mil quilômetros de diâmetro: cerca de 11 vezes o da Terra.'},{q:'Qual planeta gira quase “deitado”?',options:['Urano','Netuno','Mercúrio'],correct:0,explanation:'Urano tem uma inclinação axial de aproximadamente 98 graus.'}];
+let questionIndex=0,score=0;
+function renderQuestion(){const q=questions[questionIndex];byId('question-count').textContent=String(questionIndex+1).padStart(2,'0')+' / 03';byId('question').textContent=q.q;byId('answers').replaceChildren();byId('feedback').textContent='';byId('next').hidden=true;q.options.forEach((text,i)=>{const button=document.createElement('button');button.className='answer';button.textContent=text;button.addEventListener('click',()=>{if(i===q.correct)score++;[...byId('answers').children].forEach((b,j)=>{b.disabled=true;if(j===q.correct)b.classList.add('correct');else if(j===i)b.classList.add('wrong');});byId('feedback').textContent=(i===q.correct?'Você acertou! ':'A resposta é '+q.options[q.correct]+'. ')+q.explanation+(questionIndex===2?' Resultado: '+score+' de 3 acertos.':'');byId('next').textContent=questionIndex===2?'Tentar novamente ↺':'Próxima pergunta →';byId('next').hidden=false;});byId('answers').append(button);});}
+byId('next').addEventListener('click',()=>{questionIndex=(questionIndex+1)%questions.length;if(questionIndex===0)score=0;renderQuestion();byId('answers').firstElementChild.focus();});renderQuestion();
+
+byId('download').addEventListener('click',async event=>{event.preventDefault();try{if(location.protocol==='file:'){alert('Este arquivo HTML já está no seu computador. Você pode copiá-lo e editá-lo em qualquer editor de texto.');return;}const response=await fetch(location.href);if(!response.ok)throw new Error('download');const blob=new Blob([await response.text()],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='orbita.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch{alert('Não foi possível baixar agora. Use a opção “Salvar página como” do navegador.');}});
+</script>
+</body>
+</html>
